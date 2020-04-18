@@ -28,7 +28,9 @@ public class WebSecurity extends WebSecurityConfigurerAdapter{
 		http.authorizeRequests()
 		.antMatchers(HttpMethod.POST,env.getProperty("api.login.urlpath")).permitAll()
 		.antMatchers(HttpMethod.POST,env.getProperty("api.registration.urlpath")).permitAll()
-		.anyRequest().authenticated();
+		.anyRequest().authenticated()
+		.and()
+		.addFilter(new AuthorizatinFilter(authenticationManager(), env));
 		
 		//Never create session
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
